@@ -14,7 +14,6 @@ def count_digits(text: str) -> int:
 
 # return len(re.findall(r'[0-9]', text))
 
-
 if __name__ == '__main__':
 	print("Example:")
 	print(count_digits('who is 1st here'))
