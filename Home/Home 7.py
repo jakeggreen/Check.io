@@ -6,15 +6,23 @@ Output: A string."""
 
 #method 1 - splitting the string, reversing the elements and re-joining
 
+# def backward_string_by_word(text: str) -> str:
+# 	if not len(text) == 0: #deals with empty strings
+# 		text = text.split(' ') #split on spaces making sure they're included
+# 		reverse = list()
+# 		for word in text:
+# 			reverse.append(word[::-1]) #use slice to reverse each word
+# 		return ' '.join(reverse) #join words back together including spaces
+# 	return text
+
+#condensed version
+
 def backward_string_by_word(text: str) -> str:
 	if not len(text) == 0: #deals with empty strings
 		text = text.split(' ') #split on spaces making sure they're included
-		reverse = list()
-		for word in text:
-			reverse.append(word[::-1]) #use slice to reverse each word
+		reverse = [word[::-1] for word in text] #use slice to reverse each word
 		return ' '.join(reverse) #join words back together including spaces
 	return text
-
 
 if __name__ == '__main__':
 	print("Example:")
