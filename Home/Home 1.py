@@ -31,7 +31,7 @@ def sum_numbers(text: str) -> int:
 
 if __name__ == '__main__':
 	print("Example:")
-	print(sum_numbers('daa3 d 63'))
+	print(sum_numbers('hi'))
 
 	# These "asserts" are used for self-checking and not for an auto-testing
 	assert sum_numbers('hi') == 0
