@@ -7,10 +7,13 @@ Input: Two strings.
 Output: Int or None"""
 
 def second_index(text: str, symbol: str) -> [int, None]:
-	first = text.index(symbol) if text.index(symbol) else -1 #find the first instance index
-	new_text = text[first+1:len(text)] if text[first+1:len(text)] else None #make a substring one character after the first instance to the end of the string
-	second = new_text.index(symbol)+(first + 1) #find the second instance and add back on the first index + 1 to get index of original string.
-	return second
+	try:
+		first = text.index(symbol) #find the first instance index
+		new_text = text[first+1:len(text)] #make a substring one character after the first instance to the end of the string
+		second = new_text.index(symbol)+(first + 1) #find the second instance and add back on the first index + 1 to get index of original string.
+		return second
+	except Exception:
+		return None
 
 
 if __name__ == '__main__':
