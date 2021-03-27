@@ -5,8 +5,9 @@ Input: Iterable
 Output: Iterable"""
 
 def frequency_sort(items):
-	sort = sorted(items, key= lambda x: items.count(x), reverse=True)
-	return sort
+	first_sort = sorted(items, key= lambda x: items.index(x), reverse=False) #first sort
+	second_sort = sorted(first_sort, key= lambda x: items.count(x), reverse=True) #second sort
+	return second_sort
 
 
 if __name__ == '__main__':
