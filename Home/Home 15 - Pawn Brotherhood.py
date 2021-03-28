@@ -15,11 +15,39 @@ How it is used: For a game AI one of the important tasks is the ability to estim
 Precondition:
 0 < pawns ≤ 8 """
 
+#method 1 - using string module
+
+# import string
+
+# def safe_pawns(pawns: set) -> int:
+# 	file_list = list(string.ascii_lowercase) #includes all alphabet instead of slice [0:8] so end columns aren't returned as a possible value.
+# 	count = 0
+# 	for pawn in pawns:
+# 		file = pawn[0]
+# 		row = int(pawn[1])
+# 		left_diag = str(file_list[file_list.index(file)-1]) + str(row-1)
+# 		right_diag = str(file_list[file_list.index(file)+1]) + str(row-1)
+# 		# print(left_diag, right_diag)
+# 		if left_diag in pawns or right_diag in pawns:
+# 			# print("in list")
+# 			count += 1
+# 	return count
+
+#method 2 - using the char function and condensing uneccesary statements
+
 def safe_pawns(pawns: set) -> int:
-	return 0
+	count = 0
+	for pawn in pawns:
+		left_diag = chr(ord(pawn[0])-1) + str(int(pawn[1])-1)
+		right_diag = chr(ord(pawn[0])+1) + str(int(pawn[1])-1)
+		if left_diag in pawns or right_diag in pawns:
+			count += 1
+	return count
+
 
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
 	assert safe_pawns({"b4", "d4", "f4", "c3", "e3", "g5", "d2"}) == 6
 	assert safe_pawns({"b4", "c4", "d4", "e4", "f4", "g4", "e5"}) == 1
 	print("Coding complete? Click 'Check' to review your tests and earn cool rewards!")
+
