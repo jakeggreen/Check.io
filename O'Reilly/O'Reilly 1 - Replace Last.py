@@ -7,11 +7,7 @@ Input: List.
 Output: Iterable."""
 
 def replace_last(line: list) -> list:
-	last_element = line[-1]
-	print(last_element)
-	line = line.pop(last_element)
-	return print(line)
-
+	return [line[i] for i in range(-1,len(line)-1)]
 
 if __name__ == '__main__':
 	print("Example:")
