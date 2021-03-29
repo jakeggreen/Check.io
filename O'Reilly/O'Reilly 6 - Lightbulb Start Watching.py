@@ -10,138 +10,81 @@ Input: Two arguments and only the first one is required. The first one is a list
 
 Output: A number of seconds as an integer."""
 
-# Taken from mission Lightbulb Intro
-
-from datetime import datetime
-from typing import List
-
-def sum_light(els: List[datetime]) -> int:
-	button_pairs = [els[i:i+2] for i in range(0,len(els),2)]
-	seconds = 0
-	for pair in button_pairs:
-		seconds += abs(pair[1] - pair[0]).total_seconds()
-	return int(seconds)
-
-
-if __name__ == '__main__':
-	print("Example:")
-	print(sum_light([
-		datetime(2015, 1, 12, 10, 0 , 0),
-		datetime(2015, 1, 12, 10, 10 , 10),
-		datetime(2015, 1, 12, 11, 0 , 0),
-		datetime(2015, 1, 12, 11, 10 , 10),
-	]))
-	
-	# These "asserts" are used for self-checking and not for an auto-testing
-	assert sum_light([
-		datetime(2015, 1, 12, 10, 0 , 0),
-		datetime(2015, 1, 12, 10, 10 , 10),
-	]) == 610
-
-	assert sum_light([
-		datetime(2015, 1, 12, 10, 0 , 0),
-		datetime(2015, 1, 12, 10, 10 , 10),
-		datetime(2015, 1, 12, 11, 0 , 0),
-		datetime(2015, 1, 12, 11, 10 , 10),
-	]) == 1220
-
-	assert sum_light([
-		datetime(2015, 1, 12, 10, 0 , 0),
-		datetime(2015, 1, 12, 10, 10 , 10),
-		datetime(2015, 1, 12, 11, 0 , 0),
-		datetime(2015, 1, 12, 11, 10 , 10),
-		datetime(2015, 1, 12, 11, 10 , 10),
-		datetime(2015, 1, 12, 12, 10 , 10),
-	]) == 4820
-
-	assert sum_light([
-		datetime(2015, 1, 12, 10, 0 , 0),
-		datetime(2015, 1, 12, 10, 0 , 1),
-	]) == 1
-
-	assert sum_light([
-		datetime(2015, 1, 12, 10, 0 , 0),
-		datetime(2015, 1, 12, 10, 0 , 10),
-		datetime(2015, 1, 12, 11, 0 , 0),
-		datetime(2015, 1, 13, 11, 0 , 0),
-	]) == 86410
-
-	print("The first mission in series is completed? Click 'Check' to earn cool rewards!")
-
-from datetime import datetime
+from datetime import datetime, date, time
 from typing import List, Optional
 
 def sum_light(els: List[datetime], start_watching: Optional[datetime] = None) -> int:
-	# start = start_watching.strftime('%d.%m.%Y %H:%M:%S')
-	# print(start)
-	print(datetime(2015, 1, 12, 10, 10, 10) < datetime(2015, 1, 12, 11, 0))
-	[els.remove(date) for date in els if date <= start_watching] 		#remove all dates before or equal to the datetime started watching
-	els.append(start_watching) 											#add in the start watching date
-	els = sorted(els, key=None, reverse=False) 							#re-sort the list
-	print(els)
-	button_pairs = [els[i:i+2] for i in range(0,len(els),2)] 			#split into pairs of dates
-	seconds = 0 														#set seconds equal to zero
-	for pair in button_pairs:											#loop through the pairs
-		seconds += abs(pair[1] - pair[0]).total_seconds()				#find difference between each pair in seconds and add to total
-	return int(seconds) 
+	new_els = []
+	if start_watching:																				#check is the optional start watching datetime is populated
+		[new_els.append(date) for date in els if date > start_watching] 							#remove all dates before or equal to the datetime started watching
+		new_els.append(start_watching) 																#add in the start watching date
+		new_els = sorted(new_els, key=None, reverse=False)											#re-sort the list
+		if len(new_els) == 1:																		#check for only one datetime 
+			return 0																				#if there's only one datetime return 0
+		els = new_els																				#set the old list equal to the new one
+	button_pairs = [els[i:i+2] for i in range(0,len(els),2)]										#split into pairs of dates
+	seconds = 0 																					#set seconds equal to zero
+	for pair in button_pairs:																		#loop through the pairs
+		seconds += abs(pair[1] - pair[0]).total_seconds()											#find difference between each pair in seconds and add to total
+	return int(seconds) 																			#return the seconds as an int instead of float
 
 if __name__ == '__main__':
 	print("Example:")
 	print(sum_light([
+datetime(2015, 1, 12, 10, 0, 0),
+datetime(2015, 1, 12, 10, 10, 10),
+datetime(2015, 1, 12, 11, 0, 0),
+datetime(2015, 1, 12, 11, 10, 10)
+]))
+	
+	assert sum_light(els=[
+		datetime(2015, 1, 12, 10, 0, 0),
+		datetime(2015, 1, 12, 10, 0, 10),
+	],
+	start_watching=datetime(2015, 1, 12, 10, 0, 5)) == 5
+	
+	assert sum_light([
+		datetime(2015, 1, 12, 10, 0, 0),
+		datetime(2015, 1, 12, 10, 0, 10),
+	], datetime(2015, 1, 12, 10, 0, 0)) == 10
+	
+	assert sum_light([
 		datetime(2015, 1, 12, 10, 0, 0),
 		datetime(2015, 1, 12, 10, 10, 10),
 		datetime(2015, 1, 12, 11, 0, 0),
 		datetime(2015, 1, 12, 11, 10, 10),
-	], datetime(2015, 1, 12, 11, 0, 0)))
+	], datetime(2015, 1, 12, 11, 0, 0)) == 610
 	
-	# assert sum_light(els=[
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 0, 10),
-	# ],
-	# start_watching=datetime(2015, 1, 12, 10, 0, 5)) == 5
+	assert sum_light([
+		datetime(2015, 1, 12, 10, 0, 0),
+		datetime(2015, 1, 12, 10, 10, 10),
+		datetime(2015, 1, 12, 11, 0, 0),
+		datetime(2015, 1, 12, 11, 10, 10),
+	], datetime(2015, 1, 12, 11, 0, 10)) == 600
 	
-	# assert sum_light([
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 0, 10),
-	# ], datetime(2015, 1, 12, 10, 0, 0)) == 10
-	
-	# assert sum_light([
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 0, 0),
-	# 	datetime(2015, 1, 12, 11, 10, 10),
-	# ], datetime(2015, 1, 12, 11, 0, 0)) == 610
-	
-	# assert sum_light([
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 0, 0),
-	# 	datetime(2015, 1, 12, 11, 10, 10),
-	# ], datetime(2015, 1, 12, 11, 0, 10)) == 600
-	
-	# assert sum_light([
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 0, 0),
-	# 	datetime(2015, 1, 12, 11, 10, 10),
-	# ], datetime(2015, 1, 12, 10, 10, 0)) == 620
+	assert sum_light([
+		datetime(2015, 1, 12, 10, 0, 0),
+		datetime(2015, 1, 12, 10, 10, 10),
+		datetime(2015, 1, 12, 11, 0, 0),
+		datetime(2015, 1, 12, 11, 10, 10),
+	], datetime(2015, 1, 12, 10, 10, 0)) == 620
 
-	# assert sum_light([
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 0, 0),
-	# 	datetime(2015, 1, 12, 11, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 10, 11),
-	# 	datetime(2015, 1, 12, 12, 10, 11),
-	# ], datetime(2015, 1, 12, 12, 10, 11)) == 0
+	assert sum_light([
+		datetime(2015, 1, 12, 10, 0, 0),
+		datetime(2015, 1, 12, 10, 10, 10),
+		datetime(2015, 1, 12, 11, 0, 0),
+		datetime(2015, 1, 12, 11, 10, 10),
+		datetime(2015, 1, 12, 11, 10, 11),
+		datetime(2015, 1, 12, 12, 10, 11),
+	], datetime(2015, 1, 12, 12, 10, 11)) == 0
 
-	# assert sum_light([
-	# 	datetime(2015, 1, 12, 10, 0, 0),
-	# 	datetime(2015, 1, 12, 10, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 0, 0),
-	# 	datetime(2015, 1, 12, 11, 10, 10),
-	# 	datetime(2015, 1, 12, 11, 10, 11),
-	# 	datetime(2015, 1, 12, 12, 10, 11),
-	# ], datetime(2015, 1, 12, 12, 9, 11)) == 60
+	assert sum_light([
+		datetime(2015, 1, 12, 10, 0, 0),
+		datetime(2015, 1, 12, 10, 10, 10),
+		datetime(2015, 1, 12, 11, 0, 0),
+		datetime(2015, 1, 12, 11, 10, 10),
+		datetime(2015, 1, 12, 11, 10, 11),
+		datetime(2015, 1, 12, 12, 10, 11),
+	], datetime(2015, 1, 12, 12, 9, 11)) == 60
 	
-	# print("The second mission in series is done? Click 'Check' to earn cool rewards!")
+	print("The second mission in series is done? Click 'Check' to earn cool rewards!")
