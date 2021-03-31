@@ -13,20 +13,28 @@ Output: A number of seconds as an integer."""
 from datetime import datetime, date, time
 from typing import List, Optional
 
+#method 1 - using standard formulas
+
+# def sum_light(els: List[datetime], start_watching: Optional[datetime] = None) -> int:
+# 	new_els = []
+# 	if start_watching:																				#check is the optional start watching datetime is populated
+# 		[new_els.append(date) for date in els if date > start_watching] 							#remove all dates before or equal to the datetime started watching
+# 		new_els.append(start_watching) 																#add in the start watching date
+# 		new_els = sorted(new_els, key=None, reverse=False)											#re-sort the list
+# 		if len(new_els) == 1:																		#check for only one datetime 
+# 			return 0																				#if there's only one datetime return 0
+# 		els = new_els																				#set the old list equal to the new one
+# 	button_pairs = [els[i:i+2] for i in range(0,len(els),2)]										#split into pairs of dates
+# 	seconds = 0 																					#set seconds equal to zero
+# 	for pair in button_pairs:																		#loop through the pairs
+# 		seconds += abs(pair[1] - pair[0]).total_seconds()											#find difference between each pair in seconds and add to total
+# 	return int(seconds) 																			#return the seconds as an int instead of float
+
+#method 2 - condensing the above
+
 def sum_light(els: List[datetime], start_watching: Optional[datetime] = None) -> int:
-	new_els = []
-	if start_watching:																				#check is the optional start watching datetime is populated
-		[new_els.append(date) for date in els if date > start_watching] 							#remove all dates before or equal to the datetime started watching
-		new_els.append(start_watching) 																#add in the start watching date
-		new_els = sorted(new_els, key=None, reverse=False)											#re-sort the list
-		if len(new_els) == 1:																		#check for only one datetime 
-			return 0																				#if there's only one datetime return 0
-		els = new_els																				#set the old list equal to the new one
-	button_pairs = [els[i:i+2] for i in range(0,len(els),2)]										#split into pairs of dates
-	seconds = 0 																					#set seconds equal to zero
-	for pair in button_pairs:																		#loop through the pairs
-		seconds += abs(pair[1] - pair[0]).total_seconds()											#find difference between each pair in seconds and add to total
-	return int(seconds) 																			#return the seconds as an int instead of float
+	return sum((max(start_watching or end, end) - max(start_watching or start, start)).total_seconds() for start, end in zip(els[::2], els[1::2]))
+
 
 if __name__ == '__main__':
 	print("Example:")
