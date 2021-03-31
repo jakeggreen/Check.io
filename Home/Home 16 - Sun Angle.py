@@ -11,8 +11,7 @@ def sun_angle(time):
 	degree_per_minute = 0.25 #180 / 720 (12 hours 6am -  6pm)
 	if not ((datetime.strptime(time, '%H:%M') < datetime.strptime('06:00',  '%H:%M')) or (datetime.strptime(time, '%H:%M') > datetime.strptime('18:00',  '%H:%M'))):
 		return (((datetime.strptime(time, '%H:%M') - datetime.strptime('06:00',  '%H:%M')).seconds) / 60) * degree_per_minute
-	else:
-		return "I don't see the sun!"
+	return "I don't see the sun!"
 
 if __name__ == '__main__':
 	print("Example:")
