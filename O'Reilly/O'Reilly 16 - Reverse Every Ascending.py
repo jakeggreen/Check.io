@@ -5,17 +5,13 @@ Input: Iterable
 Output: Iterable"""
 
 def reverse_ascending(items):
-	new_list = []
-	for i in range(len(items)):
+	x = 0
+	sublist = []
+	for i in range(0,len(items)-1):
 		if items[i] < items[i+1]:
-			new_list.append(i)
-			return items
-	print(new_list)
-	return new_list
-
-	# output = [sorted(items, key=lambda x: x[1],reverse=True)]
-	# return output
-
+			x += 1
+		sublist.append(items[0:x])
+	return sublist
 
 if __name__ == '__main__':
 	print("Example:")
