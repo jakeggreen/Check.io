@@ -17,8 +17,9 @@ Output: The coordinates of the word."""
 import re 
 
 def checkio(text, word):
-	print(text)
-	print(re.sub(r',\s', r'\n',  text))
+	text = re.sub(r'[^\n\S\w]', '', text.lower())
+	number_of_rows = text.count('\n') + 1
+	word = list(word)	
 
 #These "asserts" using only for self-checking and not necessary for auto-testing
 if __name__ == '__main__':
