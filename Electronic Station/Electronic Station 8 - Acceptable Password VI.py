@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
 def is_acceptable_password(password: str) -> bool:
 	return True if ((len(password) > 6 and re.search(r'\d+', password) and re.search(r'\D', password)) or (len(password) > 9))\
-	and not (re.search(r'PASSWORD', password.upper()) and re.search(r'[a-zA-­Z]{3}', password)) else False
+	and not (re.search(r'PASSWORD', password.upper())) and (len(set(password)) >= 3) else False
 
 if __name__ == '__main__':
 	print("Example:")
