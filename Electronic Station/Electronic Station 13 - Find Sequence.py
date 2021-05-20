@@ -8,10 +8,17 @@ Output: Whether or not a sequence exists as a boolean."""
 from typing import List
 
 def checkio(matrix: List[List[int]]) -> bool:
-	for row in range(0,len(matrix)-1):
-		for column in range(0,len(matrix[0])-1):
-			print(row,column)
 
+	row = len(matrix)-1
+	columns = len(matrix[0])-1
+
+	for row in matrix:
+		for value in row:
+			for x, y in [(0,1), (1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1)]:
+				for distance in range(1,len(matrix)):
+					print(row, value, x, y, distance)
+
+			
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
 	assert checkio([
