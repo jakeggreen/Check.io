@@ -9,16 +9,22 @@ from typing import List
 
 def checkio(matrix: List[List[int]]) -> bool:
 
-	row = len(matrix)-1
-	columns = len(matrix[0])-1
+	length = range(0,len(matrix))
 
-	for row in matrix:
-		for value in row:
-			for x, y in [(0,1), (1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1)]:
-				for distance in range(1,len(matrix)):
-					print(row, value, x, y, distance)
+	directions = [(0,1), (1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1)]
 
-			
+	coords = [(x,y) for x in length for y in length]
+
+	print(directions)
+	print(coords)
+
+	for location in coords:
+		print(f'location = {location}')
+		for direction in directions:
+			print(f'direction = {direction}')
+			while matrix[location[0]][location[1]] == matrix[location[0]+direction[0]][location[1]+direction[1]]:
+				direction[]
+
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
 	assert checkio([

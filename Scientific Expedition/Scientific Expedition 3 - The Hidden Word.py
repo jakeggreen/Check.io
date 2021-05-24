@@ -18,15 +18,18 @@ import re
 
 def checkio(text, word):
 	text = re.sub(r'[^\n\S\w]', '', text.lower())
-	number_of_rows = text.count('\n') + 1
-	word = list(word)	
+	print(text)
+	text_list = text.split('\n')
+	print(text_list)
+	print(word[0])
+	for string in text_list:
+		string.find(word[0])
+
+
+	print(text_list)
 
 #These "asserts" using only for self-checking and not necessary for auto-testing
 if __name__ == '__main__':
-	assert checkio("""DREAMING of apples on a wall,
-And dreaming often, dear,
-I dreamed that, if I counted all,
--How many would appear?""", "ten") == [2, 14, 2, 16]
 	assert checkio("""He took his vorpal sword in hand:
 Long time the manxome foe he sought--
 So rested he by the Tumtum tree,
