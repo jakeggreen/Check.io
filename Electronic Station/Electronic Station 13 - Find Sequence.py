@@ -7,62 +7,55 @@ Output: Whether or not a sequence exists as a boolean."""
 
 from typing import List
 
-# def rec(matrix, location, directions: list, i):
+def rec(matrix, position, direction, i = 0):
 
-# 	while i < 3:
-# 		for direction in directions:
-# 			x = location[0] + direction[0]
-# 			y = location[1] + direction[1]
-# 			start_number = matrix[location[0]][location[1]]
-# 			if not (x or y) < 0:
-# 				coord_to_check = (x, y)
-# 				number_at_coord = matrix[x][y]
-# 				print(start_number, location, direction, coord_to_check, number_at_coord)
-# 				if start_number == number_at_coord:
-# 					i += 1
-# 					rec(matrix, coord_to_check, direction, i)
-# 				else:
-# 					i = 0
-# 					pass
-# 			else:
-# 				pass
-# 	else:			
-# 		print("True")
-# 		return True
+	while i < 4:
+		x = direction[0] + position[0]
+		y = direction[1] + position[1]
+		start_number = matrix[position[0]][position[1]]
+		if x >= 0 and y >= 0 and x <= len(matrix)-1 and y <= len(matrix)-1:
+			coord_to_check = (x, y)
+			number_at_coord = matrix[x][y]
+			print(start_number, position, direction, coord_to_check, number_at_coord, f'i = {i}')
+			if start_number == number_at_coord:
+				i += 1
+				rec(matrix, coord_to_check, direction, i)
+			else:
+				return False
+		else:
+			return False
+	else:
+		return True
 
 def checkio(matrix: List[List[int]]) -> bool:
 
 	length = range(0,len(matrix))
 
-	# directions = [(0,1), (1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1)]
+	directions = [(0,1), (1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1)]
 
 	coords = [(x, y) for x in length for y in length]
 
-	directions = [(0,1), (1,0), (0,-1), (-1,0)]
+	# directions = [(0,1), (1,0), (0,-1), (-1,0)]
 
 	print(coords)
 
-	i = 1
-	while i < 4:
-		for location in coords:
-			for direction in directions:
-				x = location[0] + (i * direction[0])
-				y = location[1] + (i * direction[1])
-				start_number = matrix[location[0]][location[1]]
-				if not (x or y) < 0:
-					coord_to_check = (x, y)
-					number_at_coord = matrix[x][y]
-					print(start_number, location, direction, coord_to_check, number_at_coord, f'i = {i}')
-					if start_number == number_at_coord:
-						i += 1
-					else:
-						i = 1
-						pass
+	for coord in coords:
+		for direction in directions:
+			if rec(matrix, coord, direction):
+				return True
+			else:
+				pass
 	else:
-		return True
+		return False
 
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
+	assert checkio([
+		[7, 1, 4, 1],
+		[1, 2, 5, 2],
+		[3, 4, 1, 3],
+		[1, 1, 8, 1]
+	]) == False
 	assert checkio([
 		[2, 1, 1, 6, 1],
 		[1, 3, 2, 1, 1],
@@ -76,13 +69,6 @@ if __name__ == '__main__':
 		[1, 3, 1, 6],
 		[1, 7, 2, 5]
 	]) == True
-	assert checkio([
-		[7, 1, 4, 1],
-		[1, 2, 5, 2],
-		[3, 4, 1, 3],
-		[1, 1, 8, 1]
-	]) == False
-
 	assert checkio([
 		[7, 1, 1, 8, 1, 1],
 		[1, 1, 7, 3, 1, 5],
