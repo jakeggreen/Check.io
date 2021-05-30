@@ -7,25 +7,23 @@ Output: Whether or not a sequence exists as a boolean."""
 
 from typing import List
 
-def rec(matrix, position, direction, i = 0):
+def rec(matrix, coord, direction, i = 0):
 
-	while i < 4:
-		x = direction[0] + position[0]
-		y = direction[1] + position[1]
-		start_number = matrix[position[0]][position[1]]
-		if x >= 0 and y >= 0 and x <= len(matrix)-1 and y <= len(matrix)-1:
-			coord_to_check = (x, y)
-			number_at_coord = matrix[x][y]
-			print(start_number, position, direction, coord_to_check, number_at_coord, f'i = {i}')
-			if start_number == number_at_coord:
-				i += 1
-				rec(matrix, coord_to_check, direction, i)
+	x = coord[0] + direction[0] 
+	y = coord[1] + direction[1] 
+	start_number = matrix[coord[0]][coord[1]]
+	if x >= 0 and y >= 0 and x <= len(matrix)-1 and y <= len(matrix)-1:
+		coord_to_check = (x, y)
+		number_at_coord = matrix[x][y]
+		# print(f'Start Number - {start_number}\nCoord To Check - {coord_to_check}\nNumber at Coord - {number_at_coord}\nIteration - {i}')
+		if start_number == number_at_coord:
+			i += 1
+			if i >= 3:
+				return True
 			else:
-				return False
-		else:
-			return False
+				return rec(matrix, coord_to_check, direction, i)	
 	else:
-		return True
+		return False
 
 def checkio(matrix: List[List[int]]) -> bool:
 
@@ -36,8 +34,6 @@ def checkio(matrix: List[List[int]]) -> bool:
 	coords = [(x, y) for x in length for y in length]
 
 	# directions = [(0,1), (1,0), (0,-1), (-1,0)]
-
-	print(coords)
 
 	for coord in coords:
 		for direction in directions:
