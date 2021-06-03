@@ -12,28 +12,10 @@ class Unit():
 	health = 50
 	is_alive = True
 
-	def make_attack(self, attacker, defender):
-		defender.health -= attacker.attack
+	def make_attack(self, defender):
+		defender.health -= self.attack
 		if defender.health <= 0:
 			defender.is_alive = False
-			return defender.is_alive
-		return defender.health
-
-	def turn(self, unit_1, unit_2):
-		unit_1.make_attack(unit_1, unit_2)
-		if unit_2.is_alive == True:
-			unit_2.make_attack(unit_2, unit_1)
-			if unit_1.is_alive == True:
-				unit_1.turn(unit_1, unit_2)
-			else:
-				unit_1.is_alive = False
-				return unit_1.is_alive
-		else:
-			return unit_2.is_alive
-
-	def fight(self, unit_1, unit_2):
-
-		return unit_2.is_alive if unit_1.turn(unit_1, unit_2) else unit_1.is_alive
 
 class Warrior(Unit):
 
@@ -53,38 +35,54 @@ class Knight(Unit):
 	unit_type = 'Knight'
 	unit_values = (Unit.health, attack)
 	
-class Army(Warrior, Knight):
+class Army():
 	def __init__(self):
-		super().__init__()
 		self.army = []
-		self.number_of_units = 0
 
 	def __iter__(self):
 		return iter(self.army)
 
 	def add_units(self, unit_type, no_of_units):
-		# for i in range(no_of_units): self.army.append(unit_type.unit_values)
-		for i in range(no_of_units): self.army.append(unit_type)
-		self.number_of_units += no_of_units
-		# print(self.army)
+		for i in range(no_of_units): self.army.append(unit_type())
 		return self.army
 
-class Battle(Unit):
-	def __init__(self):
-		super().__init__()
+	def is_army_alive(self):
+		return any([x.is_alive for x in self.army])
+
+	def first_alive_unit(self):
+		for unit in self.army:
+			if unit.is_alive == True:
+				return unit
+		return False
+
+class Battle():
+
+	#define a turn, find the first unit in active army where is_alive = true then have it fight with first unit in passive army where is_alive = true. If no is_alive = True return a winner.
 
 	def fight(self, army_1, army_2):
-		print(list(army_1), list(army_2))
-		for soldier_1, soldier_2 in zip(army_1, army_2):
-			print(soldier_1, soldier_2)
-			if soldier_1.turn(soldier_1, soldier_2):
-				pass
-			else:
-				pass
 
+		while army_1.is_army_alive() and army_2.is_army_alive():	
+			attacker_unit = army_1.first_alive_unit()
+			defender_unit = army_2.first_alive_unit()
+			fight(attacker_unit, defender_unit)
+		else:
+			return army_1.is_army_alive()
+
+def fight(unit_1, unit_2):
+
+	turn = 1
+
+	while unit_1.is_alive == True and unit_2.is_alive == True:
+		if turn % 2 != 0:
+			unit_1.make_attack(unit_2)
+		else:
+			unit_2.make_attack(unit_1)
+		turn += 1
+	else:
+		return unit_1.is_alive
 
 if __name__ == '__main__':
-	#These "asserts" using only for self-checking and not necessary for auto-testing
+	# These "asserts" using only for self-checking and not necessary for auto-testing
 	
 	#fight tests
 	chuck = Warrior()
@@ -93,18 +91,16 @@ if __name__ == '__main__':
 	dave = Warrior()
 	mark = Warrior()
 
-	unit = Unit()
-
-	assert unit.fight(chuck, bruce) == True
-	assert unit.fight(dave, carl) == False
+	assert fight(chuck, bruce) == True
+	assert fight(dave, carl) == False
 	assert chuck.is_alive == True
 	assert bruce.is_alive == False
 	assert carl.is_alive == True
 	assert dave.is_alive == False
-	assert unit.fight(carl, mark) == False
+	assert fight(carl, mark) == False
 	assert carl.is_alive == False
 
-	#battle tests
+	battle tests
 	my_army = Army()
 	my_army.add_units(Knight, 3)
 	
