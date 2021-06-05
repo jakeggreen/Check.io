@@ -4,36 +4,26 @@ The battles occur according to the following principles:
 at first, there is a duel between the first warrior of the first army and the first warrior of the second army. As soon as one of them dies - the next warrior from the army that lost the fighter enters the duel, and the surviving warrior continues to fight with his current health. This continues until all the soldiers of one of the armies die. In this case, the fight() function should return True , if the first army won, or False , if the second one was stronger.
 Note that army 1 have the advantage to start every fight!"""
 
-class Unit():
 
-	#storing these as class attributes instead of instance attributes 
-	#because default values available to all child classes
+class Warrior():
 
+	attack = 5
 	health = 50
 	is_alive = True
+	unit_type = 'Warrior'
 
 	def make_attack(self, defender):
 		defender.health -= self.attack
 		if defender.health <= 0:
 			defender.is_alive = False
 
-class Warrior(Unit):
-
-	def __init__(self):
-		super().__init__()
-
-	attack = 5
-	unit_type = 'Warrior'
-	unit_values = (Unit.health, attack)
-
-class Knight(Unit):
+class Knight(Warrior):
 
 	def __init__(self):
 		super().__init__()
 
 	attack = 7
 	unit_type = 'Knight'
-	unit_values = (Unit.health, attack)
 	
 class Army():
 	def __init__(self):
@@ -100,7 +90,7 @@ if __name__ == '__main__':
 	assert fight(carl, mark) == False
 	assert carl.is_alive == False
 
-	battle tests
+	# battle tests
 	my_army = Army()
 	my_army.add_units(Knight, 3)
 	
