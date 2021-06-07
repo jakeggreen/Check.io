@@ -12,45 +12,97 @@ All 3 classes (Swordsman, Lancer, and Archer) should have the introduce() method
 
 In this mission you should use the Abstract Factory design pattern."""
 
+from abc import abstractmethod
+
 class Army:
-    pass
+
+	@abstractmethod
+	def train_lancer(self, name):
+		pass
+
+	@abstractmethod
+	def train_swordsman(self, name):
+		pass
+
+	@abstractmethod
+	def train_archer(self, name):
+		pass
 
 class Swordsman:
-    pass
+	def __init__(self, type, name):
+		self.type = type
+		self.name = name
+
+		def introduce(self):
+			return f'{name}'
 
 class Lancer:
-    pass
+	def __init__(self, type, name):
+		self.type = type
+		self.name = name
+
+		def introduce(self):
+			return f'{name}'
 
 class Archer:
-    pass
+	def __init__(self, type, name):
+		self.type = type
+		self.name = name
+
+		def introduce(self):
+			return f'{name}'
 
 class AsianArmy(Army):
-    pass
+	def __init__(self):
+		super().__init__()
+
+	def train_lancer(self, name):
+		self = Lancer(type = 'Ronin', name = name)
+		
+	def train_swordsman(self, name):
+		self = Swordsman(type = 'Samurai', name = name)		
+
+	def train_archer(self, name):
+		self = Archer(type = 'Shinobi', name = name)
 
 class EuropeanArmy(Army):
-    pass
+	def __init__(self):
+		super().__init__()
+
+	def train_lancer(self, name):
+		self = Lancer(type = 'Raubritter', name = name)
+		print(self)
+
+	def train_swordsman(self, name):
+		self = Swordsman(type = 'Knight', name = name)
+		print(self)
+
+	def train_archer(self, name):
+		self = Archer(type = 'Ranger', name = name)
+		print(self)
+
 
 
 if __name__ == '__main__':
-    #These "asserts" using only for self-checking and not necessary for auto-testing
+	#These "asserts" using only for self-checking and not necessary for auto-testing
 
-    my_army = EuropeanArmy()
-    enemy_army = AsianArmy()
+	my_army = EuropeanArmy()
+	enemy_army = AsianArmy()
 
-    soldier_1 = my_army.train_swordsman("Jaks")
-    soldier_2 = my_army.train_lancer("Harold")
-    soldier_3 = my_army.train_archer("Robin")
+	soldier_1 = my_army.train_swordsman("Jaks")
+	soldier_2 = my_army.train_lancer("Harold")
+	soldier_3 = my_army.train_archer("Robin")
 
-    soldier_4 = enemy_army.train_swordsman("Kishimoto")
-    soldier_5 = enemy_army.train_lancer("Ayabusa")
-    soldier_6 = enemy_army.train_archer("Kirigae")
+	soldier_4 = enemy_army.train_swordsman("Kishimoto")
+	soldier_5 = enemy_army.train_lancer("Ayabusa")
+	soldier_6 = enemy_army.train_archer("Kirigae")
 
-    assert soldier_1.introduce() == "Knight Jaks, European swordsman"
-    assert soldier_2.introduce() == "Raubritter Harold, European lancer"
-    assert soldier_3.introduce() == "Ranger Robin, European archer"
-    
-    assert soldier_4.introduce() == "Samurai Kishimoto, Asian swordsman"
-    assert soldier_5.introduce() == "Ronin Ayabusa, Asian lancer"
-    assert soldier_6.introduce() == "Shinobi Kirigae, Asian archer"
+	assert soldier_1.introduce() == "Knight Jaks, European swordsman"
+	assert soldier_2.introduce() == "Raubritter Harold, European lancer"
+	assert soldier_3.introduce() == "Ranger Robin, European archer"
+	
+	assert soldier_4.introduce() == "Samurai Kishimoto, Asian swordsman"
+	assert soldier_5.introduce() == "Ronin Ayabusa, Asian lancer"
+	assert soldier_6.introduce() == "Shinobi Kirigae, Asian archer"
 
-    print("Coding complete? Let's try tests!")
+	print("Coding complete? Let's try tests!")
