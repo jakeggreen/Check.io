@@ -12,76 +12,40 @@ All 3 classes (Swordsman, Lancer, and Archer) should have the introduce() method
 
 In this mission you should use the Abstract Factory design pattern."""
 
-from abc import abstractmethod
+class Army():
 
-class Army:
+	def train_lancer(army, name):
+		return Lancer(army, name)
 
-	@abstractmethod
-	def train_lancer(self, name):
-		pass
+	def train_swordsman(army, name):
+		return Swordsman(army, name)
 
-	@abstractmethod
-	def train_swordsman(self, name):
-		pass
+	def train_archer(army, name):
+		return Archer(army, name)
 
-	@abstractmethod
-	def train_archer(self, name):
-		pass
+class Unit():
+	def __init__(unit, army, name):
+		unit.army_type = army.army_type
+		unit.name = name
+		unit.type = getattr(army, unit.class_type)
 
-class Swordsman:
-	def __init__(self, type, name):
-		self.type = type
-		self.name = name
+	def introduce(self):
+		# print(f'{self.type} {self.name}, {self.army_type} {self.class_type}')
+		return f'{self.type} {self.name}, {self.army_type} {self.class_type}'
 
-		def introduce(self):
-			return f'{name}'
+class Swordsman(Unit): class_type = 'swordsman'
 
-class Lancer:
-	def __init__(self, type, name):
-		self.type = type
-		self.name = name
+class Lancer(Unit): class_type = 'lancer'
 
-		def introduce(self):
-			return f'{name}'
-
-class Archer:
-	def __init__(self, type, name):
-		self.type = type
-		self.name = name
-
-		def introduce(self):
-			return f'{name}'
+class Archer(Unit): class_type = 'archer'
 
 class AsianArmy(Army):
-	def __init__(self):
-		super().__init__()
-
-	def train_lancer(self, name):
-		self = Lancer(type = 'Ronin', name = name)
-		
-	def train_swordsman(self, name):
-		self = Swordsman(type = 'Samurai', name = name)		
-
-	def train_archer(self, name):
-		self = Archer(type = 'Shinobi', name = name)
+	army_type = 'Asian'
+	swordsman, lancer, archer = 'Samurai', 'Ronin', 'Shinobi'
 
 class EuropeanArmy(Army):
-	def __init__(self):
-		super().__init__()
-
-	def train_lancer(self, name):
-		self = Lancer(type = 'Raubritter', name = name)
-		print(self)
-
-	def train_swordsman(self, name):
-		self = Swordsman(type = 'Knight', name = name)
-		print(self)
-
-	def train_archer(self, name):
-		self = Archer(type = 'Ranger', name = name)
-		print(self)
-
-
+	army_type = 'European'
+	swordsman, lancer, archer = 'Knight', 'Raubritter', 'Ranger'
 
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
