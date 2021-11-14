@@ -22,18 +22,26 @@ class Building:
 		self.width_WE = width_WE
 		self.width_NS = width_NS
 		self.height = height
+		self.dictionary = {}
 
 	def corners(self):
-		raise NotImplementedError
+		self.east = self.west + self.width_WE
+		self.north = self.south + self.width_NS
+		return {'north-east': [self.north, self.east],
+				'north-west': [self.north, self.west],
+				'south-east': [self.south, self.east],
+				'south-west': [self.south, self.west]}
 
 	def area(self):
-		raise NotImplementedError
+		area = self.width_NS * self.width_WE
+		return area
 
 	def volume(self):
-		raise NotImplementedError
+		volume = self.width_NS * self.width_WE * self.height
+		return volume
 
 	def __repr__(self):
-		raise NotImplementedError
+		return f'Building({self.south}, {self.west}, {self.width_WE}, {self.width_NS}, {self.height})'
 
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
