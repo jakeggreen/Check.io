@@ -27,6 +27,7 @@ class Chat:
 	def show_robot_dialogue(self):
 		robot_messages = []
 		human_messages = []
+		final_message = []
 
 		for message in self.Robot.message:
 			robot_message = re.sub(r'[aeiou]', '0', re.sub(r'[^aeiou]', '1', message))
@@ -37,48 +38,40 @@ class Chat:
 			human_messages.append(human_message)
 
 		for h_message, r_message in zip(human_messages, robot_messages):
-			return f'{self.Human.name} said: {h_message}\n{self.Robot.name} said: {r_message}'
-
+			final_message.append(f'{self.Human.name} said: {h_message}\n{self.Robot.name} said: {r_message}')
+		final_message = '\n'.join(final_message)
+		return final_message
+		
 	def show_human_dialogue(self):
-		# robot_messages = []
-		# human_messages = []
-		# final_message = []
+		final_message = []
+		for h_message, r_message in zip(self.Human.message, self.Robot.message):
+			final_message.append(f'{self.Human.name} said: {h_message}\n{self.Robot.name} said: {r_message}')
+		final_message = '\n'.join(final_message)
+		return final_message
 
-		# for message in self.Robot.message:
-		# 	robot_messages.append(message)
+	def connect_robot(self, Robot):
+		self.Robot = Robot
 
-		# for message in self.Human.message:
-		# 	human_messages.append(message)
+	def connect_human(self, Human):
+		self.Human = Human
 
-		# for r_message, h_message in zip(robot_messages, human_messages):
-		# 	final_message.append(f'{self.Human.name} said: {h_message}\n{self.Robot.name} said: {r_message}\n')
-		
-		# print(''.join(final_message))
-		# return ''.join(final_message)
-		return self.message
+class Human():
+	def __init__(self, name):
+		super().__init__()
+		self.name = name
+		self.message =[]
 
-	def connect_robot(self, Messenger):
-		self.Robot = Messenger
-
-	def connect_human(self, Messenger):
-		self.Human = Messenger
-
-class Messenger():
-	def __init__(self):
-		message = []
-		
 	def send(self, text):
-		message.append(f'{self.name} said: {text}\n')
+		self.message.append(text)
 
-class Human(Messenger):
+class Robot():
 	def __init__(self, name):
 		super().__init__()
 		self.name = name
+		self.message = []
 
-class Robot(Messenger):
-	def __init__(self, name):
-		super().__init__()
-		self.name = name
+	def send(self, text):
+		self.message.append(text)
 
 if __name__ == '__main__':
 	#These "asserts" using only for self-checking and not necessary for auto-testing
@@ -90,8 +83,8 @@ if __name__ == '__main__':
 	chat.connect_robot(bot)
 	karl.send("Hi! What's new?")
 	bot.send("Hello, human. Could we speak later about it?")
-	print(chat.show_robot_dialogue())
-	print(chat.show_human_dialogue())
+	# print(chat.show_robot_dialogue())
+	# print(chat.show_human_dialogue())
 	assert chat.show_human_dialogue() == """Karl said: Hi! What's new?
 R2D2 said: Hello, human. Could we speak later about it?"""
 	assert chat.show_robot_dialogue() == """Karl said: 101111011111011
@@ -108,4 +101,6 @@ R2D2 said: 10110111010111100111101110011101011010011011"""
 	ann.send("Hi, Bob. Sorry, I need a few more hours. Could you wait, please?")
 	bob.send("Ok. But hurry up, please. It's important.")
 	ann.send("Sure, thanks.")
+	# print(ann.message)
+	# print(chat.show_human_dialogue())
 	assert chat.show_human_dialogue() == "Bob said: Hi, Ann! Is your part of work done?\nAnn-1244c said: Hi, Bob. Sorry, I need a few more hours. Could you wait, please?\nBob said: Ok. But hurry up, please. It's important.\nAnn-1244c said: Sure, thanks."
