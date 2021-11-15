@@ -28,7 +28,6 @@ def search_coords(x, y, str_list, word, i, final_coords, start_length):
 			if next_letter == word[i + 1]:
 				start_length += 1
 				if next_letter == word[-1] and start_length == len(word):
-					print('HERE')
 					if direction[0] == 0:
 						final_coords.append([(y_new + 1) - (len(word) - 1), x_new + 1, y_new + 1, x_new + 1])
 					if direction[1] == 0:
