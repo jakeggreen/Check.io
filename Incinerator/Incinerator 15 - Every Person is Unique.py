@@ -28,8 +28,8 @@ class Person:
 		return f'{self.first_name} {self.last_name}'
 
 	def age(self):
-		birth_date = datetime.strptime(self.birth_date, '%d.%M.%Y')
-		current_date = datetime.strptime('01.01.2018', '%d.%M.%Y')
+		birth_date = datetime.strptime(self.birth_date, '%d.%m.%Y').date()
+		current_date = datetime.strptime('01.01.2018', '%d.%m.%Y').date()
 		return math.floor(((current_date - birth_date).days)/365)
 
 	def work(self):
@@ -54,9 +54,11 @@ if __name__ == '__main__':
 
 	p1 = Person("John", "Smith", "19.09.1979", "welder", 15, 3600, "Canada", "Vancouver", "male")
 	p2 = Person("Hanna Rose", "May", "05.12.1995", "designer", 2.2, 2150, "Austria", "Vienna")
+	p3 = Person('Kate', 'Hound', '05.02.2000', 'student', 0, 0, 'Australia', 'Sydney', 'female')
 	assert p1.name() == "John Smith", "Name"
 	assert p1.age() == 38, "Age"
 	assert p2.work() == "Is a designer", "Job"
 	assert p1.money() == "648 000", "Money"
 	assert p2.home() == "Lives in Vienna, Austria", "Home"
+	assert p3.age() == 17, "Age"
 	print("Coding complete? Let's try tests!")
