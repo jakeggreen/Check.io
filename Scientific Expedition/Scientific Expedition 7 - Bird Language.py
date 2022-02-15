@@ -19,23 +19,21 @@ def translate(text: str) -> str:
 	for word in text_list:
 		i = 0
 		for x in range(len(word)):
-			print(i, x)
-			if x != i:
-				print('here')
-				pass
 			letter = word[x]
-			if letter not in vowels:
+			if x != i:
+				pass
+			elif letter not in vowels:
 				letter_list.append(letter)
 				i += 2
-			elif letter in vowels:
-				letter_list.append(letter)
 			else:
-				i = x
-	print(letter_list)
+				letter_list.append(letter)
+				i += 3
+		letter_list.append(' ')
+	return ''.join(letter_list).strip()
 
 if __name__ == "__main__":
-	# print("Example:")
-	# print(translate("hieeelalaooo"))
+	print("Example:")
+	print(translate("hieeelalaooo"))
 
 	# These "asserts" are used for self-checking and not for an auto-testing
 	assert translate("hieeelalaooo") == "hello"
