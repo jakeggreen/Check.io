@@ -29,26 +29,28 @@ def similar_triangles(coords_1: Coords, coords_2: Coords) -> bool:
 	#find length of sides between points, A-B, B-C, C-A for both triangles
 	coord_list = (coords_1, coords_2)
 	angles = []
+	print(coord_list)
 	for coord in coord_list:
+		print(coord)
 		a = abs(coord[2][0] - coord[0][0])
 		b = abs(coord[1][1] - coord[0][1])
 		c = abs(coord[1][1] - coord[2][1])
-		print(a,b,c)
+		print(f'Lengths: {a},{b},{c}')
 		angles.append(find_angles(a, b, c))
 		print(angles)
 	return True if angles[0] == angles[1] else False
 	
 	
 if __name__ == '__main__':
-	print("Example:")
-	print(similar_triangles([[0, 2], [1, 4], [5, 2]], [[0, 1], [1, 3], [5, 1]]))
+	# print("Example:")
+	# print(similar_triangles([[0, 2], [1, 4], [5, 2]], [[0, 1], [1, 3], [5, 1]]))
 
 	# These "asserts" are used for self-checking and not for an auto-testing
-	assert similar_triangles([(0, 0), (1, 2), (2, 0)], [(3, 0), (4, 2), (5, 0)]) is True, 'basic'
-	assert similar_triangles([(1, 0), (1, 2), (2, 0)], [(3, 0), (5, 4), (5, 0)]) is True, 'scaling and reflection'
-	assert similar_triangles([(0, 0), (1, 2), (2, 0)], [(3, 0), (4, 3), (5, 0)]) is False, 'different #1'
-	assert similar_triangles([(0, 0), (1, 2), (2, 0)], [(2, 0), (4, 4), (6, 0)]) is True, 'scaling'
-	assert similar_triangles([(0, 0), (0, 3), (2, 0)], [(3, 0), (5, 3), (5, 0)]) is True, 'reflection'
-	assert similar_triangles([(1, 0), (1, 3), (2, 0)], [(3, 0), (5, 5), (5, 0)]) is False, 'different #2'
+	# assert similar_triangles([(0, 0), (1, 2), (2, 0)], [(3, 0), (4, 2), (5, 0)]) is True, 'basic'
+	# assert similar_triangles([(1, 0), (1, 2), (2, 0)], [(3, 0), (5, 4), (5, 0)]) is True, 'scaling and reflection'
+	# assert similar_triangles([(0, 0), (1, 2), (2, 0)], [(3, 0), (4, 3), (5, 0)]) is False, 'different #1'
+	# assert similar_triangles([(0, 0), (1, 2), (2, 0)], [(2, 0), (4, 4), (6, 0)]) is True, 'scaling'
+	# assert similar_triangles([(0, 0), (0, 3), (2, 0)], [(3, 0), (5, 3), (5, 0)]) is True, 'reflection'
+	# assert similar_triangles([(1, 0), (1, 3), (2, 0)], [(3, 0), (5, 5), (5, 0)]) is False, 'different #2'
 	assert similar_triangles([[1, 3], [4, 2], [2, 1]], [[2, -2], [0, -3], [-1, -1]]) is True
 	print("Coding complete? Click 'Check' to earn cool rewards!")
