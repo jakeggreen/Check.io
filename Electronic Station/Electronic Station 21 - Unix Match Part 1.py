@@ -12,21 +12,15 @@ Let me show you what I mean by matching the filenames in the unix-shell. For exa
 import re
 
 def unix_match(filename: str, pattern: str) -> bool:
-	if pattern == '*':
-		return True
-	else:
-		if re.match(r'\*', pattern):
-			pattern = pattern.replace('*','\w') 
-			print(pattern)
-		else:
-			pattern = pattern.replace('?','.')
-		
-
-
-
+	pattern = pattern.replace('.','\.')
+	pattern = pattern.replace('*','.*')
+	pattern = pattern.replace('?','.')
+	search_string = re.compile(pattern)
+	return True if search_string.search(filename) else False
 
 if __name__ == '__main__':
 	print("Example:")
+	assert unix_match('log12.txt', 'log??.txt') == True
 	print(unix_match('somefile.txt', '*'))
 	
 	# These "asserts" are used for self-checking and not for an auto-testing

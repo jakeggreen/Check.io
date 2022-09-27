@@ -1,19 +1,13 @@
 """You are given a list that contains solely integers (positive and negative). Your job is to sum only the numbers that are identical and consecutive."""
 
+from itertools import groupby
 
 def sum_consecutives(a):
-
-	i, j, x = 0, 0, 0
-
-	while a[i + 1] == a[i] and i < (len(a) -1):
-		x += a[i] + a[i + 1]
-		i += 1
-		if i + 1 == len(a):
-			return x
-		print(x, j, i)
-
-
-
+	sum = []
+	for k, g in groupby(a):
+		sum.append(k * len([1 for _ in g]))
+	return sum
+ 
 if __name__ == '__main__':
 	print("Example:")
 	print(list(sum_consecutives([1, 1, 1, 1])))
